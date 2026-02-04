@@ -1,12 +1,14 @@
 # zhinjs-best-practices
 
+此目录名称用于对齐仓库结构（非 npm 包名）。
+
 Zhin 插件开发最佳实践集合, 参考 `zhin/examples/test-bot` 的结构与用法，帮助 AI agent 生成更可靠的插件方案。
 
 ## 适用场景
 
-- 创建新的 Zhin 插件或 bot 项目
-- 设计插件目录结构与入口文件
-- 规划配置文件、插件加载与运行脚本
+- 创建新的 Zhin 插件或 bot 项目。
+- 设计插件目录结构与入口文件。
+- 规划配置文件、插件加载与运行脚本。
 - 评审代码是否符合 Zhin 官方示例。
 
 ## 规则列表
@@ -35,11 +37,13 @@ project/
 import { createApp } from 'zhin.js'
 
 const app = await createApp({
-  plugins: ['your-plugin']
+  plugins: ['<plugin-name>']
 })
 
 await app.start()
 ```
+
+> 如果运行环境不支持顶层 await，请使用 `async function main()` 包裹上述逻辑。
 
 ### 3. 插件入口必须调用 usePlugin()
 
@@ -64,7 +68,7 @@ import { defineConfig } from 'zhin.js'
 
 export default defineConfig({
   plugin_dirs: ['./src/plugins'],
-  plugins: ['your-plugin'],
+  plugins: ['<plugin-name>'],
   bots: [{
     context: 'process',
     name: 'dev-bot'
@@ -74,7 +78,7 @@ export default defineConfig({
 
 ### 5. 插件职责单一
 
-一个插件只负责一个功能域（命令、日志、定时任务等），避免巨型插件。
+一个插件只负责一个功能域（命令、日志、定时任务等），避免把不相关的命令与调度逻辑堆在同一文件。
 
 ### 6. 使用内置中间件与命令系统
 
@@ -97,7 +101,14 @@ export default defineConfig({
 }
 ```
 
+> 以上脚本假设 `zhin` 已作为项目依赖安装（例如在 `package.json` 中）。
+
+### 9. 区分应用入口与插件依赖
+
+- 应用入口使用 `zhin.js`（如 `createApp`、`defineConfig`）。
+- 插件内部使用 `@zhin.js/core`（如 `usePlugin`、`MessageCommand`）。
+
 ## 参考
 
-- `https://github.com/zhinjs/zhin/tree/main/examples/test-bot`
+- [test-bot example](https://github.com/zhinjs/zhin/tree/main/examples/test-bot)
 - Zhin 核心 API: `@zhin.js/core`

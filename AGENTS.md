@@ -1,6 +1,6 @@
 # AI Agent Guidance
 
-This repository contains Zhin-focused AI skills and best practice references. Use this file for short, high-level expectations for AI agents working with this repo.
+This repository contains Zhin-focused AI skills and best practice references. This file provides high-level expectations for AI agents working with this repo.
 
 ## Goals
 
