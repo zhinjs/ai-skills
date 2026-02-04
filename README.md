@@ -17,6 +17,8 @@ ai-skills/
 ├── skills/           # Individual skills directory
 │   └── [skill-name]/ # Each skill in its own directory
 │       └── SKILL.md  # Skill definition (required)
+├── packages/         # Best practices and reference material
+│   └── [package-name]/
 ├── README.md         # This file
 └── .gitignore
 ```
