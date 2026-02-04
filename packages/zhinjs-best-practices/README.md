@@ -7,7 +7,7 @@ Zhin 插件开发最佳实践集合, 参考 `zhin/examples/test-bot` 的结构�
 ## 适用场景
 
 - 创建新的 Zhin 插件或 bot 项目。
-- 设计插件目录结构与入口文件。
+- 设计插件目录结构与启动脚本。
 - 规划配置文件、插件加载与运行脚本。
 - 评审代码是否符合 Zhin 官方示例。
 
@@ -21,29 +21,29 @@ Zhin 插件开发最佳实践集合, 参考 `zhin/examples/test-bot` 的结构�
 project/
 ├── data/                # 数据目录（设备信息、缓存）
 ├── src/
-│   ├── index.ts         # 应用入口
-│   └── plugins/         # 插件目录
-│       └── your-plugin.ts
+│   ├── plugins/         # 插件目录
+│   │   └── your-plugin.ts
+│   └── types.d.ts       # （可选）类型声明
 ├── zhin.config.ts       # 配置文件
 ├── package.json
 └── tsconfig.json
 ```
 
-### 2. 明确入口文件职责
+### 2. 启动方式优先使用脚本命令
 
-`src/index.ts` 只负责创建 App、加载配置与启动：
+示例项目通过 `package.json` 脚本直接启动（不依赖显式入口文件）： 
 
-```ts
-import { createApp } from 'zhin.js'
-
-const app = await createApp({
-  plugins: ['<plugin-name>']
-})
-
-await app.start()
+```json
+{
+  "scripts": {
+    "dev": "zhin dev",
+    "start": "zhin start",
+    "stop": "zhin stop"
+  }
+}
 ```
 
-> 如果运行环境不支持顶层 await，请使用 `async function main()` 包裹上述逻辑。
+保持 `zhin.config.ts` 作为主配置入口即可。
 
 ### 3. 插件入口必须调用 usePlugin()
 
@@ -95,17 +95,18 @@ export default defineConfig({
 ```json
 {
   "scripts": {
-    "dev": "pnpm zhin dev",
-    "start": "pnpm zhin start"
+    "dev": "zhin dev",
+    "start": "zhin start",
+    "stop": "zhin stop"
   }
 }
 ```
 
 > 以上脚本假设 `zhin` 已作为项目依赖安装（例如在 `package.json` 中）。
 
-### 9. 区分应用入口与插件依赖
+### 9. 区分配置与插件依赖
 
-- 应用入口使用 `zhin.js`（如 `createApp`、`defineConfig`）。
+- 应用配置使用 `zhin.config.ts`（配合 `defineConfig`）。
 - 插件内部使用 `@zhin.js/core`（如 `usePlugin`、`MessageCommand`）。
 
 ## 参考
