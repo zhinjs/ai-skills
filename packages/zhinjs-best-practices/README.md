@@ -1,13 +1,13 @@
 # zhinjs-best-practices
 
-Zhin 插件开发最佳实践集合，参考 `zhin/examples/test-bot` 的结构与用法，帮助 AI agent 生成更可靠的插件方案。
+Zhin 插件开发最佳实践集合, 参考 `zhin/examples/test-bot` 的结构与用法，帮助 AI agent 生成更可靠的插件方案。
 
 ## 适用场景
 
 - 创建新的 Zhin 插件或 bot 项目
 - 设计插件目录结构与入口文件
 - 规划配置文件、插件加载与运行脚本
-- 评审代码是否符合 Zhin 官方示例
+- 评审代码是否符合 Zhin 官方示例。
 
 ## 规则列表
 
