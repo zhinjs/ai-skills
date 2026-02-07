@@ -79,9 +79,18 @@ The core inserts a default middleware that routes messages to registered command
 
 Use custom middleware for logging, auth, or throttling.
 
+## Commands and Tools
+
+Commands can be auto-generated from `ZhinTool` definitions. When a tool is registered via `plugin.addTool()`, a corresponding `MessageCommand` is created automatically.
+
+Conversely, existing commands can be converted to tools for AI agent use via `toolService.commandToTool()`.
+
+See the **zhin-tool-service** skill for full details on the unified Tool↔Command system, including `ZhinTool`, `defineTool`, permission levels, and tool collection.
+
 ## Command + Middleware Checklist
 
 - Commands must be registered after `usePlugin()`.
 - Use `.desc/.usage/.examples` to enrich help text.
 - Use middleware to pre-process or guard incoming messages.
 - Ensure middleware calls `next()` unless you intentionally stop processing.
+- Use `ZhinTool` when you need a tool that works with both AI agents and chat commands (see **zhin-tool-service** skill).
