@@ -197,7 +197,9 @@ const calcTool = defineTool<{ expression: string }>({
     usage: ['Calculate math expressions'],
   },
   execute: async (args) => {
-    const result = eval(args.expression)
+    // Use a safe math parser (e.g. mathjs) instead of eval
+    const math = await import('mathjs')
+    const result = math.evaluate(args.expression)
     return `Result: ${result}`
   },
 })
